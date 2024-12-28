@@ -78,6 +78,7 @@ export default {
                         });
                     });
                 }).catch(e => {
+                    this.loading = false;
                     this.$notify({
                         message:
                             "An Error Occurred.",

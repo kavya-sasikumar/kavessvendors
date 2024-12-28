@@ -13,15 +13,19 @@ import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 import Signup from "@/pages/Signup.vue";
 import Login from "@/pages/Login.vue";
 
+// New Pages
+import Product from "@/pages/Product.vue";
+import Order from "@/pages/Order.vue";
+
 const routes = [
   {
     path: "/login",
-    name: "Login to Kavess",
+    name: "login",
     component: Login,
   },
   {
     path: "/signup",
-    name: "Register for Kavess",
+    name: "register",
     component: Signup,
   },
   {
@@ -35,43 +39,53 @@ const routes = [
         component: Dashboard,
       },
       {
+        path: "products",
+        name: "Products",
+        component: Product,
+      },
+      {
+        path: "orders",
+        name: "Orders",
+        component: Order,
+      },
+      {
         path: "user",
         name: "User Profile",
         component: UserProfile,
       },
-      {
-        path: "table",
-        name: "Table List",
-        component: TableList,
-      },
-      {
-        path: "typography",
-        name: "Typography",
-        component: Typography,
-      },
-      {
-        path: "icons",
-        name: "Icons",
-        component: Icons,
-      },
-      {
-        path: "maps",
-        name: "Maps",
-        meta: {
-          hideFooter: true,
-        },
-        component: Maps,
-      },
-      {
-        path: "notifications",
-        name: "Notifications",
-        component: Notifications,
-      },
-      {
-        path: "upgrade",
-        name: "Upgrade to PRO",
-        component: UpgradeToPRO,
-      },
+      // {
+      //   path: "table",
+      //   name: "Table List",
+      //   component: TableList,
+      // },
+      // {
+      //   path: "typography",
+      //   name: "Typography",
+      //   component: Typography,
+      // },
+      // {
+      //   path: "icons",
+      //   name: "Icons",
+      //   component: Icons,
+      // },
+      // {
+      //   path: "maps",
+      //   name: "Maps",
+      //   meta: {
+      //     hideFooter: true,
+      //   },
+      //   component: Maps,
+      // },
+      // {
+      //   path: "notifications",
+      //   name: "Notifications",
+      //   component: Notifications,
+      // },
+      // {
+      //   path: "upgrade",
+      //   name: "Upgrade to PRO",
+      //   component: UpgradeToPRO,
+      // },
     ],
   },
 ];

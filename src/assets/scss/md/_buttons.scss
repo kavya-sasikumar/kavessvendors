@@ -50,6 +50,10 @@
     @include btn-styles($gray-light);
   }
 
+  &.md-burgundy {
+    @include btn-styles($brand-burgundy);
+  }
+
   &.md-primary {
     @include btn-styles($brand-primary);
   }

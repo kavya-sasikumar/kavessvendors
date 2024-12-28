@@ -270,6 +270,9 @@
   &[data-color="blue"] {
     @include set-background-color-button($brand-info);
   }
+  &[data-color="burgundy"] {
+    @include set-background-color-button($brand-burgundy);
+  }
   &[data-color="green"] {
     @include set-background-color-button($brand-success);
   }

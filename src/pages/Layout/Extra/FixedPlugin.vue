@@ -5,90 +5,55 @@
         <i class="fa fa-cog fa-2x" @click="toggleDropDown"> </i>
       </a>
       <ul class="dropdown-menu" :class="{ show: isOpen }">
-        <li class="header-title">Sidebar Filters</li>
+        <!-- <li class="header-title">Sidebar Filters</li>
         <li class="adjustments-line text-center">
-          <span
-            v-for="item in sidebarColors"
-            :key="item.color"
-            class="badge filter"
-            :class="[`badge-${item.color}`, { active: item.active }]"
-            :data-color="item.color"
-            @click="changeSidebarBackground(item)"
-          >
+          <span v-for="item in sidebarColors" :key="item.color" class="badge filter"
+            :class="[`badge-${item.color}`, { active: item.active }]" :data-color="item.color"
+            @click="changeSidebarBackground(item)">
           </span>
-        </li>
+        </li> -->
         <li class="header-title">Images</li>
-        <li
-          v-for="item in sidebarImages"
-          :key="item.image"
-          :class="{ active: item.active }"
-          @click="changeSidebarImage(item)"
-        >
+        <li v-for="item in sidebarImages" :key="item.image" :class="{ active: item.active }"
+          @click="changeSidebarImage(item)">
           <a class="img-holder switch-trigger">
             <img :src="item.image" alt="" />
           </a>
         </li>
 
-        <li class="button-container">
+        <!-- <li class="button-container">
           <div class="">
-            <md-button
-              class="md-success md-block"
-              :href="freeUrl"
-              target="_blank"
-              >Free Download</md-button
-            >
+            <md-button class="md-success md-block" :href="freeUrl" target="_blank">Free Download</md-button>
           </div>
-        </li>
+        </li> -->
 
-        <li class="button-container">
+        <!-- <li class="button-container">
           <div class="">
-            <md-button
-              class="md-block md-primary"
-              :href="documentationLink"
-              target="_blank"
-              >Documentation</md-button
-            >
+            <md-button class="md-block md-primary" :href="documentationLink" target="_blank">Documentation</md-button>
           </div>
-        </li>
+        </li> -->
 
-        <li class="header-title d-flex justify-content-center">
+        <!-- <li class="header-title d-flex justify-content-center">
           Thank you for sharing!
-        </li>
+        </li> -->
 
-        <li class="button-container">
-          <social-sharing
-            :url="shareUrl"
-            inline-template
-            title="Vue Material Dashboard - Admin Template for Vue.js"
-            hashtags="vuejs, dashboard, vuematerial"
-            twitter-user="creativetim"
-          >
+        <!-- <li class="button-container">
+          <social-sharing :url="shareUrl" inline-template title="Vue Material Dashboard - Admin Template for Vue.js"
+            hashtags="vuejs, dashboard, vuematerial" twitter-user="creativetim">
             <div class="centered-buttons">
-              <ShareNetwork
-                title=""
-                url="https://www.creative-tim.com/product/vue-material-dashboard"
-                network="facebook"
-                class="md-button md-round md-just-icon md-facebook"
-              >
+              <ShareNetwork title="" url="https://www.creative-tim.com/product/vue-material-dashboard"
+                network="facebook" class="md-button md-round md-just-icon md-facebook">
                 <i class="fab fa-facebook-f"></i>
               </ShareNetwork>
-              <ShareNetwork
-                url="https://www.creative-tim.com/product/vue-material-dashboard"
-                title=""
-                network="twitter"
-                class="md-button md-round md-just-icon md-twitter"
-              >
+              <ShareNetwork url="https://www.creative-tim.com/product/vue-material-dashboard" title="" network="twitter"
+                class="md-button md-round md-just-icon md-twitter">
                 <i class="fab fa-twitter"></i>
               </ShareNetwork>
             </div>
           </social-sharing>
-        </li>
-        <li class="github-buttons">
-          <gh-btns-star
-            slug="creativetimofficial/vue-material-dashboard"
-            show-count
-          ></gh-btns-star>
-        </li>
+        </li> -->
+        <!-- <li class="github-buttons">
+          <gh-btns-star slug="creativetimofficial/vue-material-dashboard" show-count></gh-btns-star>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -102,7 +67,7 @@ import "vue-github-buttons/dist/vue-github-buttons.css";
 Vue.use(SocialSharing);
 Vue.use(VueGitHubButtons, { useCache: true });
 export default {
-  components: { SocialSharing },
+  components: {},
   data() {
     return {
       documentationLink:

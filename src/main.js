@@ -34,6 +34,9 @@ import Chartist from "chartist";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
+import VModal from "vue-js-modal/dist/index.nocss.js";
+import "vue-js-modal/dist/styles.css";
+
 // configure router
 const router = new VueRouter({
   mode: "history",
@@ -49,6 +52,7 @@ Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
 Vue.use(VueAxios, axios);
+Vue.use(VModal);
 
 /* eslint-disable no-new */
 new Vue({

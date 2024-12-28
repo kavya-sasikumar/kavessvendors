@@ -18,6 +18,7 @@
     "vue-axios": "^3.5.2",
     "vue-clickaway": "2.2.2",
     "vue-github-buttons": "3.1.0",
+    "vue-js-modal": "^2.0.1",
     "vue-material": "1.0.0-beta-15",
     "vue-router": "3.6.5",
     "vue-social-sharing": "3.0.9"

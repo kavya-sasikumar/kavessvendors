@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="sidebar"
-    :data-color="sidebarItemColor"
-    :data-image="sidebarBackgroundImage"
-    :style="sidebarStyle"
-  >
+  <div class="sidebar" data-color="burgundy" :data-image="sidebarBackgroundImage" :style="sidebarStyle">
     <div class="logo">
       <a href="#" class="simple-text logo-mini">
         <div class="logo-img">
@@ -12,11 +7,8 @@
         </div>
       </a>
 
-      <a
-        href="https://www.creative-tim.com/product/vue-material-dashboard"
-        target="_blank"
-        class="simple-text logo-normal"
-      >
+      <a href="https://www.creative-tim.com/product/vue-material-dashboard" target="_blank"
+        class="simple-text logo-normal">
         {{ title }}
       </a>
     </div>
@@ -25,12 +17,7 @@
       <md-list class="nav">
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot>
-          <sidebar-link
-            v-for="(link, index) in sidebarLinks"
-            :key="link.name + index"
-            :to="link.path"
-            :link="link"
-          >
+          <sidebar-link v-for="(link, index) in sidebarLinks" :key="link.name + index" :to="link.path" :link="link">
           </sidebar-link>
         </slot>
       </md-list>
@@ -47,7 +34,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Vue MD",
+      default: "Kavess",
     },
     sidebarBackgroundImage: {
       type: String,
@@ -55,13 +42,13 @@ export default {
     },
     imgLogo: {
       type: String,
-      default: require("@/assets/img/vue-logo.png"),
+      default: require("@/assets/img/kavess.png"),
     },
     sidebarItemColor: {
       type: String,
-      default: "green",
+      default: "burgundy",
       validator: (value) => {
-        let acceptedValues = ["", "purple", "blue", "green", "orange", "red"];
+        let acceptedValues = ["", "burgundy", "blue", "green", "orange", "red"];
         return acceptedValues.indexOf(value) !== -1;
       },
     },
