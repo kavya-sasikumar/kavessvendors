@@ -4,31 +4,31 @@
         <div class="md-layout">
 
             <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
-                <md-button class="md-burgundy" style="float: right;" @click="showAddModal"><md-icon>add</md-icon> Add
-                    Products</md-button>
                 <md-card class="md-card-plain">
 
                     <md-card-header data-background-color="burgundy">
-                        <h4 class="title">List of Products <b>{{ products_total }}</b></h4>
-                        <p class="category">Here is a list of your products on Kavess</p>
+                        <h4 class="title">List of Orders <b>{{ orders_total }}</b></h4>
+                        <p class="category">Here is a list of your orders on Kavess</p>
                     </md-card-header>
                     <md-card-content>
                         <span v-if="isLoading" class="loader"></span>
-                        <md-table v-model="products" style="padding: 20px; background-color: #eeeeee;" v-else>
+                        <md-table v-model="orders" style="padding: 20px; background-color: #eeeeee;" v-else>
                             <md-table-row slot="md-table-row" slot-scope="{ item }" style="background-color: #eeeeee;">
                                 <md-table-cell class="avatar" md-label="" style="width: 50px; height: 60px;"><img
-                                        :src="item.image" width="50" height="60"></md-table-cell>
-                                <md-table-cell md-label="Title">{{ item.title }}</md-table-cell>
-                                <md-table-cell md-label="Color">{{ item.color }}</md-table-cell>
+                                        :src="`${url.replace(/\/$/, '')}${item.product_details.image}`" width="50"
+                                        height="60"></md-table-cell>
+                                <md-table-cell md-label="Title">{{ item.product_details.title }}</md-table-cell>
+                                <md-table-cell md-label="Status">{{ item.status_type }}</md-table-cell>
+                                <md-table-cell md-label="Unit Price">{{ item.product_details.price }}</md-table-cell>
                                 <md-table-cell md-label="Price">{{ item.price }}</md-table-cell>
-                                <md-table-cell md-label="Stock">{{ item.stock }}</md-table-cell>
+                                <md-table-cell md-label="Quantity">{{ item.quantity }}</md-table-cell>
                                 <md-table-cell md-label=""><md-button @click="showEditModal(item)"
-                                        class="md-burgundy md-just-icon md-round"><md-icon>edit</md-icon></md-button></md-table-cell>
+                                        class="md-burgundy md-just-icon md-round"><md-icon>preview</md-icon></md-button></md-table-cell>
                             </md-table-row>
 
                         </md-table>
                         <md-button v-if="!isLoading && nextPage" class="md-burgundy md-block" :disabled="loading"
-                            @click="getMoreProducts">
+                            @click="getMoreOrders">
                             <span v-if="loading" class="loader"></span>
                             <span v-else>Load More</span>
                         </md-button>
@@ -37,11 +37,11 @@
             </div>
         </div>
 
-        <modal name="edit-modal" height="auto">
+        <modal name="view-cust-modal" height="auto">
             <div class="modal-content">
                 <!-- Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Product</h4>
+                    <h4 class="modal-title">Customer Details</h4>
                     <md-button class="md-simple md-just-icon md-round modal-close-button" @click="hideEditModal()">
                         <md-icon>clear</md-icon>
                     </md-button>
@@ -50,135 +50,51 @@
                 <!-- Body -->
                 <div class="modal-body">
                     <form @submit.prevent="updateProduct" class="edit-form">
-                        <!-- Image Upload -->
-                        <div class="image-upload">
-                            <img :src="form.image" class="preview-image" alt="Product image">
-                            <input type="file" accept="image/*" @change="handleImageChange" ref="fileInput"
-                                class="file-input" style="visibility: hidden;">
-                            <md-button class="md-raised md-burgundy" @click="$refs.fileInput.click()">
-                                <md-icon>add_photo_alternate</md-icon>
-                                Change Image
-                            </md-button>
-                        </div>
 
-                        <!-- Title -->
+                        <!-- First Name -->
                         <md-field class="md-primary">
-                            <label>Product Title</label>
-                            <md-input class="md-primary" v-model="form.title" required></md-input>
+                            <label>First Name</label>
+                            <md-input :disabled="true" class="md-primary" v-model="form.buyer.first_name"></md-input>
                         </md-field>
 
-                        <!-- Color -->
+                        <!-- Last Name -->
                         <md-field>
-                            <label>Color</label>
-                            <md-input v-model="form.color" required></md-input>
+                            <label>Last Name</label>
+                            <md-input :disabled="true" v-model="form.buyer.last_name"></md-input>
                         </md-field>
 
-                        <!-- Price -->
+                        <!-- Email -->
                         <md-field>
-                            <label>Price</label>
-                            <md-input type="number" step="0.01" v-model="form.price" required></md-input>
-                            <span class="md-prefix">$</span>
+                            <label>Email</label>
+                            <md-input :disabled="true" v-model="form.buyer.email"></md-input>
                         </md-field>
 
-                        <!-- Stock -->
+                        <!-- Address -->
                         <md-field>
-                            <label>Stock</label>
-                            <md-input type="number" v-model="form.stock" required></md-input>
+                            <label>Address</label>
+                            <md-textarea :disabled="true" v-model="form.address"></md-textarea>
                         </md-field>
 
-                        <!-- Description -->
+                        <!-- Status -->
                         <md-field>
-                            <label>Description</label>
-                            <md-textarea v-model="form.description" required></md-textarea>
-                        </md-field>
-
-                        <!-- Availability -->
-                        <md-field>
-                            <md-switch v-model="form.is_available">Available for Sale</md-switch>
+                            <label>Shipping Status</label>
+                            <md-select v-model="form.status_type">
+                                <md-option value="PENDING">Pending</md-option>
+                                <md-option value="SHIPPED">Shipped</md-option>
+                                <md-option value="DELIVERED">Delivered</md-option>
+                                <md-option value="CANCELLED">Cancelled</md-option>
+                            </md-select>
                         </md-field>
                     </form>
                 </div>
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <md-button class="md-simple" @click="updateProduct">
+                    <md-button class="md-simple" @click="updateOrder">
                         <span v-if="loading" class="loader"></span>
                         <span v-else>Proceed</span>
                     </md-button>
                     <md-button class="md-simple md-danger" @click="hideEditModal">CLOSE</md-button>
-                </div>
-            </div>
-        </modal>
-
-        <modal name="add-modal" height="auto">
-            <div class="modal-content">
-                <!-- Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Product</h4>
-                    <md-button class="md-simple md-just-icon md-round modal-close-button" @click="hideAddModal()">
-                        <md-icon>clear</md-icon>
-                    </md-button>
-                </div>
-
-                <!-- Body -->
-                <div class="modal-body">
-                    <form @submit.prevent="addProduct" class="edit-form">
-                        <!-- Image Upload -->
-                        <div class="image-upload">
-                            <img :src="addForm.image" class="preview-image" alt="Product image">
-                            <input type="file" accept="image/*" @change="handleImageChangeAdd" ref="fileInput"
-                                class="file-input" style="visibility: hidden;">
-                            <md-button class="md-raised md-burgundy" @click="$refs.fileInput.click()">
-                                <md-icon>add_photo_alternate</md-icon>
-                                Change Image
-                            </md-button>
-                        </div>
-
-                        <!-- Title -->
-                        <md-field class="md-primary">
-                            <label>Product Title</label>
-                            <md-input class="md-primary" v-model="addForm.title" required></md-input>
-                        </md-field>
-
-                        <!-- Color -->
-                        <md-field>
-                            <label>Color</label>
-                            <md-input v-model="addForm.color" required></md-input>
-                        </md-field>
-
-                        <!-- Price -->
-                        <md-field>
-                            <label>Price</label>
-                            <md-input type="number" step="0.01" v-model="addForm.price" required></md-input>
-                            <span class="md-prefix">$</span>
-                        </md-field>
-
-                        <!-- Stock -->
-                        <md-field>
-                            <label>Stock</label>
-                            <md-input type="number" v-model="addForm.stock" required></md-input>
-                        </md-field>
-
-                        <!-- Description -->
-                        <md-field>
-                            <label>Description</label>
-                            <md-textarea v-model="addForm.description" required></md-textarea>
-                        </md-field>
-
-                        <!-- Availability -->
-                        <md-field>
-                            <md-switch v-model="addForm.is_available">Available for Sale</md-switch>
-                        </md-field>
-                    </form>
-                </div>
-
-                <!-- Footer -->
-                <div class="modal-footer">
-                    <md-button class="md-simple" @click="addProduct">
-                        <span v-if="loading" class="loader"></span>
-                        <span v-else>Proceed</span>
-                    </md-button>
-                    <md-button class="md-simple md-danger" @click="hideAddModal">CLOSE</md-button>
                 </div>
             </div>
         </modal>
@@ -197,14 +113,20 @@ export default {
     data() {
         return {
             url: process.env.VUE_APP_BASE_URL,
-            products: [],
+            orders: [],
             isLoading: false,
             loading: false,
             nextPage: null,
-            products_total: 0,
+            orders_total: 0,
             rowsPerPage: 3,
             editModal: false,
-            form: {},
+            form: {
+                buyer: {
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                }
+            },
             addForm: {
                 image: '',
                 title: '',
@@ -224,16 +146,16 @@ export default {
             if (!localStorage.getItem("token")) {
                 this.$router.push({ name: "login", query: { redirect: "/products" } });
             } else {
-                this.getProducts();
+                this.getOrders();
             }
         },
         showEditModal(item) {
             this.form = item;
-            this.$modal.show('edit-modal');
+            this.$modal.show('view-cust-modal');
         },
         hideEditModal() {
             this.form = {};
-            this.$modal.hide('edit-modal');
+            this.$modal.hide('view-cust-modal');
         },
         handleImageChange(event) {
             const file = event.target.files[0];
@@ -246,20 +168,14 @@ export default {
             }
             console.log(this.form)
         },
-        updateProduct() {
+        updateOrder() {
             this.loading = true;
-            let stringImage;
-            if (typeof this.form.image === 'string') {
-                stringImage = this.form.image;
-                delete this.form.image;
-            }
 
-            axios.put(this.url + "api/v1/product/" + this.form.id + "/", this.form, {
+            axios.put(this.url + "api/v1/orderitem/" + this.form.id + "/", this.form, {
                 headers: { authorization: "Token " + localStorage.getItem("token") }
             }).then(response => {
                 // console.log(response.data)
-                this.form.image = stringImage;
-                this.$modal.hide('edit-modal');
+                this.$modal.hide('view-cust-modal');
                 this.form = {};
                 this.loading = false;
             }).catch(e => {
@@ -274,14 +190,15 @@ export default {
                 });
             });
         },
-        getProducts() {
+        getOrders() {
             this.isLoading = true;
-            axios.get(this.url + "api/v1/vendor-products/" + localStorage.getItem("userId") + "/", {
+            let vendor_data = JSON.parse(localStorage.getItem("vendor"))
+            axios.get(this.url + "api/v1/orderitems/" + vendor_data.id + "/", {
                 headers: { authorization: "Token " + localStorage.getItem("token") }
             }).then(response => {
-                // console.log(response.data)
-                this.products = response.data.results;
-                this.products_total = response.data.total;
+                console.log(response.data)
+                this.orders = response.data.results;
+                this.orders_total = response.data.total;
                 this.nextPage = response.data.links.next;
                 this.isLoading = false;
             }).catch(e => {
@@ -296,15 +213,15 @@ export default {
                 });
             });
         },
-        getMoreProducts() {
+        getMoreOrders() {
             this.loading = true;
             if (this.nextPage != null) {
                 axios.get(this.nextPage, {
                     headers: { authorization: "Token " + localStorage.getItem("token") }
                 }).then(response => {
                     // console.log(response.data)
-                    this.products = [
-                        ...this.products,
+                    this.orders = [
+                        ...this.orders,
                         ...response.data.results,
                     ];
                     this.nextPage = response.data.links.next;
@@ -364,7 +281,7 @@ export default {
                     newProduct,
                     ...this.products,
                 ];
-                this.products_total += 1;
+                this.orders_total += 1;
                 this.$modal.hide('add-modal');
                 this.loading = false;
             }).catch(e => {
@@ -511,5 +428,15 @@ export default {
     .modal-footer {
         padding: 12px 16px;
     }
+}
+
+.modal-content {
+    overflow: visible !important;
+    position: relative;
+}
+
+.md-select-menu {
+    z-index: 1050 !important;
+    position: absolute;
 }
 </style>
