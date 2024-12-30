@@ -70,6 +70,11 @@
               </md-list-item>
             </router-link>
 
+            <md-list-item style="cursor: pointer;" @click="logout">
+              <i class="material-icons">logout</i>
+              <p class="hidden-lg hidden-md">Logout</p>
+            </md-list-item>
+
           </md-list>
         </div>
       </div>
@@ -97,6 +102,10 @@ export default {
   methods: {
     toggleSidebar() {
       this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+    },
+    logout() {
+      localStorage.clear();
+      this.$router.push("/login");
     },
   },
 };

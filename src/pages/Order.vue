@@ -144,7 +144,7 @@ export default {
     methods: {
         checkLoggedIn() {
             if (!localStorage.getItem("token")) {
-                this.$router.push({ name: "login", query: { redirect: "/products" } });
+                this.$router.push({ name: "login", query: { redirect: "/orders" } });
             } else {
                 this.getOrders();
             }

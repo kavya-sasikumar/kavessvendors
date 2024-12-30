@@ -244,7 +244,7 @@ export default {
                 };
                 reader.readAsDataURL(file);
             }
-            console.log(this.form)
+            // console.log(this.form)
         },
         updateProduct() {
             this.loading = true;
